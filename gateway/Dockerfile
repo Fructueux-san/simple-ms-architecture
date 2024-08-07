@@ -1,0 +1,16 @@
+
+FROM python:3.10-slim-bullseye
+
+# RUN apt-get update \
+#   && pip install --no-cache-dir --upgrade pip 
+# RUN apt-get install -y pkg-config
+WORKDIR /app
+COPY ./requirements.txt /app
+RUN pip install --no-cache-dir --requirement /app/requirements.txt
+
+COPY . /app
+EXPOSE 8080
+
+CMD ["python3", "server.py"]
+
+	
