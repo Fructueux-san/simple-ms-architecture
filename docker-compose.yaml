@@ -1,0 +1,45 @@
+services:
+  auth:
+    build: ./auth/
+    container_name: ms-auth
+    environment:
+      - MYSQL_HOST=http://localhost
+      - MYSQL_USER=root
+      - MYSQL_PORT=3306
+      - MYSQL_DB=thebestdbever
+    ports:
+      - 5000:5000
+  converter:
+    container_name: ms-converter
+    build: ./converter/
+    environment:
+      - RABBIT_HOST=rabbitmq
+      - RABBIT_PASSWORD=thesuperpassword
+      - RABBIT_USER=theeternal
+  gateway:
+    container_name: ms-gateway
+    build: ./gateway/
+    environment:
+      - MONGO_HOST=mongodb://localhost
+      - MONGO_USER=mongooo
+      - MONGO_PORT=27017
+      - MONGO_DB=thebestdbever
+      - RABBIT_HOST=rabbitmq
+      - RABBIT_PASSWORD=thesuperpassword
+      - RABBIT_USER=theeternal
+    ports:
+      - 5000:5000
+  rabbitmq:
+      hostname: rabbitmq
+      image: rabbitmq:3.9-management
+      command: rabbitmq-server
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      volumes:
+        - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+        - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
+
+  
+
+      
