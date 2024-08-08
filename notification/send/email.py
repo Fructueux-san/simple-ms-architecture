@@ -19,7 +19,9 @@ def notification(message):
 
         session = smtplib.SMTP("localhost")
         session.starttls()
-        session.login(sender_address, sender_password)
+
+        # My server doesn't support this login mechanos
+        # session.login(sender_address, sender_password)
         session.send_message(msg, sender_address, receiver_address)
         session.quit()
         print("Mail sent")
