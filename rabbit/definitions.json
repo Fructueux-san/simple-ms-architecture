@@ -2,8 +2,8 @@
     "rabbit_version": "3.9",
     "users": [
         {
-            "name": "local_jobs",
-            "password_hash": "8jL0U9QJhCJQtr4VHVeUUeMw5FEvIlZg21vFKcFzEBhP6IsU",
+            "name": "local",
+            "password_hash": "fmZ8QI9YZEEYUnh4VAuISAgHCt04ELg1T4xHg2LOt3wecGkY",
             "hashing_algorithm": "rabbit_password_hashing_sha256",
             "tags": ""
         },
@@ -21,7 +21,7 @@
     ],
     "permissions": [
         {
-            "user": "local_jobs",
+            "user": "local",
             "vhost": "\/",
             "configure": ".*",
             "write": ".*",

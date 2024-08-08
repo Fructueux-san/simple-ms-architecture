@@ -25,8 +25,9 @@ services:
       - MONGO_PORT=27017
       - MONGO_DB=thebestdbever
       - RABBIT_HOST=rabbitmq
-      - RABBIT_PASSWORD=thesuperpassword
-      - RABBIT_USER=theeternal
+      - RABBIT_PASSWORD=thelocaluserpassword
+      - RABBIT_USER=local
+      - RABBIT_PORT=5432
     ports:
       - 5000:5000
   rabbitmq:
