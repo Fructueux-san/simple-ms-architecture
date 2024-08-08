@@ -16,6 +16,8 @@ services:
       - RABBIT_HOST=rabbitmq
       - RABBIT_PASSWORD=thesuperpassword
       - RABBIT_USER=theeternal
+      - VIDEO_QUEUE=video
+      - MP3_QUEUE=mp3
   gateway:
     container_name: ms-gateway
     build: ./gateway/
@@ -28,6 +30,8 @@ services:
       - RABBIT_PASSWORD=thelocaluserpassword
       - RABBIT_USER=local
       - RABBIT_PORT=5432
+      - VIDEO_QUEUE=video
+      - MP3_QUEUE=mp3
     ports:
       - 5000:5000
   rabbitmq:
