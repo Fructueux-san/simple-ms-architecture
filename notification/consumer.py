@@ -5,9 +5,8 @@ from send import email
 
 def main():
     #rabbitmq connection
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host="rabbitmq")
-    )
+    rabbit_credentials = pika.PlainCredentials('local', 'thelocaluserpassword')
+    connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq", 5672, '/', credentials=rabbit_credentials))
     channel = connection.channel()
 
     def callback(ch, method, properties, body):
@@ -25,6 +24,7 @@ def main():
 
 if __name__ == "__main__":
     try:
+        print("Notification consumer start")
         main()
     except KeyboardInterrupt:
         print("Interrupted")
