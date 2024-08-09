@@ -4,9 +4,10 @@ services:
     container_name: ms-auth
     environment:
       - MYSQL_HOST=http://localhost
-      - MYSQL_USER=root
+      - MYSQL_USER=msdbuser
       - MYSQL_PORT=3306
       - MYSQL_DB=thebestdbever
+      - MYSQL_PASSWORD=thedbuserpassword
     ports:
       - 5000:5000
   converter:
@@ -49,8 +50,11 @@ services:
       - RABBIT_PORT=5432
       - VIDEO_QUEUE=video
       - MP3_QUEUE=mp3
+      - EMAIL_ADDRESS=dev@debian.testing
+      - EMAIL_PASSWORD=theultimatemegapassword
   rabbitmq:
       hostname: rabbitmq
+      container_name: ms-rabbitmq
       image: rabbitmq:3.9-management
       command: rabbitmq-server
       ports:
@@ -60,6 +64,12 @@ services:
         - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
         - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
 
-  
-
-      
+  database:
+    image: mysql
+    restart: always
+    container_name: ms-database
+    environment:
+      - MYSQL_ROOT_PASSWORD=thecoolrootpassword
+      - MYSQL_USER=msdbuser
+      - MYSQL_PASSWORD=thedbuserpassword
+      - MYSQL_DATABASE=thebestdbever
