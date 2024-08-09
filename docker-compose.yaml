@@ -3,7 +3,7 @@ services:
     build: ./auth/
     container_name: ms-auth
     environment:
-      - MYSQL_HOST=http://localhost
+      - MYSQL_HOST=database
       - MYSQL_USER=msdbuser
       - MYSQL_PORT=3306
       - MYSQL_DB=thebestdbever
@@ -68,6 +68,8 @@ services:
     image: mysql
     restart: always
     container_name: ms-database
+    volumes:
+      - ./auth/init.sql:/docker-entrypoint-initdb.d/auth.sql:ro
     environment:
       - MYSQL_ROOT_PASSWORD=thecoolrootpassword
       - MYSQL_USER=msdbuser
