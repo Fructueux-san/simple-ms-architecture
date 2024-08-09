@@ -4,12 +4,15 @@ services:
     container_name: ms-auth
     environment:
       - MYSQL_HOST=database
-      - MYSQL_USER=msdbuser
+      - MYSQL_USER=auth_user
       - MYSQL_PORT=3306
-      - MYSQL_DB=thebestdbever
-      - MYSQL_PASSWORD=thedbuserpassword
+      - MYSQL_DB=auth
+      - MYSQL_PASSWORD=Auth123
     ports:
       - 5000:5000
+    depends_on:
+      - database
+      - rabbitmq
   converter:
     container_name: ms-converter
     build: ./converter/
@@ -34,7 +37,9 @@ services:
       - VIDEO_QUEUE=video
       - MP3_QUEUE=mp3
     ports:
-      - 5000:5000
+      - 8000:8080
+    depends_on:
+      - rabbitmq
 
   notification:
     container_name: ms-notification
@@ -52,6 +57,8 @@ services:
       - MP3_QUEUE=mp3
       - EMAIL_ADDRESS=dev@debian.testing
       - EMAIL_PASSWORD=theultimatemegapassword
+    depends_on:
+      - rabbitmq
   rabbitmq:
       hostname: rabbitmq
       container_name: ms-rabbitmq
