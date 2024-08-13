@@ -3,16 +3,17 @@ services:
     build: ./auth/
     container_name: ms-auth
     environment:
-      - MYSQL_HOST=database
+      - MYSQL_HOST=127.0.0.1
       - MYSQL_USER=auth_user
       - MYSQL_PORT=3306
       - MYSQL_DB=auth
       - MYSQL_PASSWORD=Auth123
+      - JWT_SECRET=thesuperstrongsecret
     ports:
       - 5000:5000
-    depends_on:
-      - database
-      - rabbitmq
+    network_mode: 'host'
+
+
   converter:
     container_name: ms-converter
     build: ./converter/
@@ -40,6 +41,9 @@ services:
       - 8000:8080
     depends_on:
       - rabbitmq
+      - auth
+      - notification
+      - converter
 
   notification:
     container_name: ms-notification
@@ -72,9 +76,11 @@ services:
         - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
 
   database:
-    image: mysql
+    image: mysql:8.0
     restart: always
     container_name: ms-database
+      #command: mysqld --mysql-native-password=ON # important for auth service (mysql >=8.0)
+    command: mysqld --authentication-policy=caching_sha2_password
     volumes:
       - ./auth/init.sql:/docker-entrypoint-initdb.d/auth.sql:ro
     environment:
@@ -82,3 +88,4 @@ services:
       - MYSQL_USER=msdbuser
       - MYSQL_PASSWORD=thedbuserpassword
       - MYSQL_DATABASE=thebestdbever
+
