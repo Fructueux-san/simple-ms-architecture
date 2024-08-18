@@ -8,15 +8,16 @@ from storage import util
 from bson.objectid import ObjectId
 
 server = Flask(__name__)
-server.config["MONGO_URI"] = "mongodb://host/minikube.internal:27017/video"
+mongo_host = os.environ.get('MONGO_HOST');
+server.config["MONGO_URI"] = f"{mongo_host}/video"
 
 mongo_video = PyMongo(
         server,
-        uri="mongodb://host/minikube.internal:27017/video"
+        uri=f"mongodb://{mongo_host}/video"
 )
 mongo_mp3 = PyMongo(
         server,
-        uri="mongodb://host/minikube.internal:27017/mp3s"
+        uri=f"mongodb://{mon_host}/mp3s"
 )
 fs_videos = gridfs.GridFS(mongo_video.db)
 fs_mp3s = gridfs.GridFS(mongo_mp3.db)

@@ -23,6 +23,7 @@ services:
       - RABBIT_USER=theeternal
       - VIDEO_QUEUE=video
       - MP3_QUEUE=mp3
+      - MONGO_HOST=ms-mongo
   gateway:
     container_name: ms-gateway
     build: ./gateway/
@@ -37,6 +38,8 @@ services:
       - RABBIT_PORT=5432
       - VIDEO_QUEUE=video
       - MP3_QUEUE=mp3
+      - AUTH_SVC_ADDRESS=auth
+      - AUTH_SVC_PORT=5000
     ports:
       - 8000:8080
     depends_on:

@@ -4,10 +4,12 @@ from pika import connection
 from pymongo import MongoClient
 import gridfs
 from convert import to_mp3
+from os import environ
 
 
 def main():
-    client = MongoClient("host.minikube.internal", 27017)
+    mongo_host = environ.get("MONGO_HOST")
+    client = MongoClient(f"{mongo_host}", 27017)
     db_videos = client.videos
     db_mp3s = client.mp3s
     #gridfs 
